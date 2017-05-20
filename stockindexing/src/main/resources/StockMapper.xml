@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="stockindexing.dao.StockDao">
+	<resultMap id="stockDetail" type="StockDetailModel">
+		<result property="t" column="symbol" javaType="java.lang.String" />
+		<result property="e" column="exchange" javaType="java.lang.String" />
+		<result property="l" column="last_price" javaType="java.lang.String" />
+		<result property="ltt" column="last_trading_time" javaType="java.lang.String" />
+		<result property="c" column="changes" javaType="java.lang.String" />
+		<result property="cp" column="changes_percentage" javaType="java.lang.String" />
+		<result property="el" column="after_hour_last_price" javaType="java.lang.String" />
+		<result property="div" column="dividend" javaType="java.lang.String" />
+		<result property="yld" column="dividend_yield" javaType="java.lang.String" />
+		<result property="name" column="name" javaType="java.lang.String" />
+		<result property="marketCap" column="market_cap" javaType="java.lang.String" />
+		<result property="sector" column="sector" javaType="java.lang.String" />
+		<result property="industry" column="industry" javaType="java.lang.String" />
+	</resultMap>
+	
+	<select id="getStockName" resultMap="stockDetail">
+		select name, market_cap, sector, industry from stock_master where symbol = #{symbol}
+	</select>
+	
+	<insert id="archiveStockDetail" parameterType="stockindexing.response.StockDetails">
+		insert into stock_archive
+		(symbol, exchange, last_price, last_trading_time, changes_percentage, changes, after_hour_last_price, dividend, dividend_yield)
+		values
+		(#{stockDetail.t}, #{stockDetail.e}, #{stockDetail.l}, #{stockDetail.ltt}, #{stockDetail.cp}, #{stockDetail.c},	#{stockDetail.el}, #{stockDetail.div}, #{stockDetail.yld});
+	</insert>
+	
+</mapper>
+
