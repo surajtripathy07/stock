@@ -9,6 +9,6 @@ import stockindexing.response.StockDetails;
 public interface StockDao {
 
 	public StockDetails getStockName(@Param("symbol") String symbol);
-	
+
 	public void archiveStockDetail(@Param("stockDetail") StockDetails stockDetail);
 }

@@ -23,7 +23,7 @@ import stockindexing.util.StockURL;
  */
 @RestController
 public class StockController {
-	
+
 	@Autowired
 	private StockProcessor sproc;
 
@@ -33,11 +33,12 @@ public class StockController {
 	}
 
 	@RequestMapping(value = StockURL.GET_STOCK_DETAILS_URL, method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<StockResponse> getStockDetails(@RequestParam("stockName") String stockName) {
+	public ResponseEntity<StockResponse> getStockDetails(@RequestParam("stockName") String stockName,
+			@RequestParam("exchange") String exchange) {
 		List<StockDetails> data = null;
-		try{
-			data = sproc.getNewStockValues(stockName.split(","));
-		} catch (Exception ex){
+		try {
+			data = sproc.getNewStockValues(stockName.split(","), exchange);
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 		return new ResponseEntity<StockResponse>(new StockResponse(0, data), HttpStatus.OK);

@@ -17,7 +17,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebSecurity
 @EnableWebMvc
 @ComponentScan("stockindexing")
-@MapperScan(value = {"stockindexing.dao"})
+@MapperScan(value = { "stockindexing.dao" })
 public class StockIndexingConfig extends WebSecurityConfigurerAdapter {
 	private final Integer MAX_CONNECTION_SIZE = 50;
 

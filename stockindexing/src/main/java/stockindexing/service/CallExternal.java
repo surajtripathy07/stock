@@ -9,5 +9,5 @@ import stockindexing.response.StockDetails;
 @Component
 public interface CallExternal {
 
-	public List<StockDetails> get(String url);
+	public List<StockDetails> get(String url, String exchange, String param);
 }

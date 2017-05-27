@@ -9,11 +9,9 @@ import stockindexing.response.StockDetails;
 @Service
 public interface StockProcessor {
 
-	public List<StockDetails> getStockDetails(String[] stockSymbols);
-	
+	public List<StockDetails> getStockDetails(String[] stockSymbols, String exchange);
+
 	public boolean insertStockDetails(List<StockDetails> stockResponse);
-	
-	public boolean insertStockDetail(StockDetails stockResponse);
-	
-	public List<StockDetails> getNewStockValues(String[] stockSymbols);
+
+	public List<StockDetails> getNewStockValues(String[] stockSymbols, String exchange);
 }

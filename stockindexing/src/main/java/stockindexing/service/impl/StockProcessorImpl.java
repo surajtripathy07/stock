@@ -21,21 +21,24 @@ public class StockProcessorImpl implements StockProcessor {
 	private StockDao stDao;
 
 	@Override
-	public List<StockDetails> getStockDetails(String[] stockSymbols) {
+	public List<StockDetails> getStockDetails(String[] stockSymbols, String exchange) {
 		StringBuffer url = new StringBuffer(StockURL.GOOGLE_STOCK_URL);
-
+		StringBuilder paramB = new StringBuilder();
 		for (String symbols : stockSymbols)
-			url.append(symbols).append(",");
+			paramB.append(symbols).append(",");
 
 		// removing the last ","
-		url.setLength(url.length() - 1);
+		paramB.setLength(paramB.length() - 1);
 
-		List<StockDetails> response = googleCall.get(url.toString());
+		List<StockDetails> response = googleCall.get(url.toString(), exchange, paramB.toString());
 		return null != response ? response : null;
 	}
 
 	@Override
 	public boolean insertStockDetails(List<StockDetails> stockResponse) {
+		if (stockResponse == null)
+			return true;
+
 		for (StockDetails detail : stockResponse) {
 			// save in db for regression
 			stDao.archiveStockDetail(detail);
@@ -52,13 +55,8 @@ public class StockProcessorImpl implements StockProcessor {
 	}
 
 	@Override
-	public boolean insertStockDetail(StockDetails stockResponse) {
-		return false;
-	}
-
-	@Override
-	public List<StockDetails> getNewStockValues(String[] stockSymbols) {
-		List<StockDetails> details = getStockDetails(stockSymbols);
+	public List<StockDetails> getNewStockValues(String[] stockSymbols, String exchange) {
+		List<StockDetails> details = getStockDetails(stockSymbols, exchange);
 		insertStockDetails(details);
 		return details;
 	}
